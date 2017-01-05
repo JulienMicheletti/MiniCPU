@@ -472,7 +472,21 @@ void sub(CPU cpu,Register B) {
  * Multiplication.
  */
 void mul(CPU cpu,Register B) {
-  // à compléter
+  int i, j;
+
+  setValue(cpu.R0, 0);
+  copyValue(cpu.R1, cpu.alsu.accu);
+  for (i = 0; i <= B.size; i++){
+    if (B.word[i] == 1){
+      for (j = 0; j != i; j++){
+	add(cpu.alsu, cpu.alsu.accu);
+      }
+      add(cpu.alsu, cpu.R0);
+      copyValue(cpu.R0, cpu.alsu.accu);
+      copyValue(cpu.alsu.accu, cpu.R1);
+    }
+  }
+  copyValue(cpu.alsu.accu, cpu.R0);
 }
 
 /////////////////////////////////////////////////////////
